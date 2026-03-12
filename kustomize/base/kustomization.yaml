@@ -5,7 +5,7 @@ resources:
   - namespace.yaml
 
   - apps/nginx.yaml
-  - apps/frontend.yaml
+  - apps/service-frontend.yaml
   - apps/public-api.yaml
   - apps/product-api.yaml
   - apps/product-api-db.yaml

@@ -1,6 +1,6 @@
 # Learn Consul - Circuit Breaking (OpenShift)
 
-This repository configures an **existing OpenShift cluster** that already has **Consul Service Mesh** installed (Consul 1.22.3) to run a circuit breaking lab.
+This repository configures an **existing OpenShift cluster** that already has **Consul Service  esh** installed (Consul 1.22.3) to run a circuit breaking lab.
 
 It **does not** provision infrastructure.
 

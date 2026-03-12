@@ -81,10 +81,10 @@ spec:
           resources:
             limits:
               cpu: 100m
-              memory: 100M
+              memory: 100Mi
             requests:
               cpu: 100m
-              memory: 100M
+              memory: 100Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -129,10 +129,10 @@ spec:
           resources:
             limits:
               cpu: 100m
-              memory: 100M
+              memory: 100Mi
             requests:
               cpu: 100m
-              memory: 100M
+              memory: 100Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -177,7 +177,7 @@ spec:
           resources:
             limits:
               cpu: 100m
-              memory: 100M
+              memory: 100Mi
             requests:
               cpu: 100m
-              memory: 100M
+              memory: 100Mi
