@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: product-api
+  namespace: circuitbreak
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-api
+  namespace: circuitbreak
+spec:
+  selector:
+    app: product-api
+  ports:
+    - name: http
+      port: 9090
+      targetPort: 9090
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: product-api
+  namespace: circuitbreak
+spec:
+  protocol: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-api
+  namespace: circuitbreak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-api
+  template:
+    metadata:
+      annotations:
+        consul.hashicorp.com/connect-inject: "true"
+        consul.hashicorp.com/transparent-proxy: "true"
+      labels:
+        app: product-api
+    spec:
+      serviceAccountName: product-api
+      containers:
+        - name: product-api
+          image: hashicorpdemoapp/product-api:latest
+          ports:
+            - containerPort: 9090
+          env:
+            - name: BIND_ADDRESS
+              value: ":9090"
+            - name: DB_CONNECTION
+              value: "host=product-api-db port=5432 user=postgres password=password dbname=products sslmode=disable"

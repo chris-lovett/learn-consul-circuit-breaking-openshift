@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: payments
+  namespace: circuitbreak
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments
+  namespace: circuitbreak
+spec:
+  selector:
+    app: payments
+  ports:
+    - name: http
+      port: 1800
+      targetPort: 1800
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: payments
+  namespace: circuitbreak
+spec:
+  protocol: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments
+  namespace: circuitbreak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payments
+  template:
+    metadata:
+      annotations:
+        consul.hashicorp.com/connect-inject: "true"
+        consul.hashicorp.com/transparent-proxy: "true"
+      labels:
+        app: payments
+    spec:
+      serviceAccountName: payments
+      containers:
+        - name: payments
+          image: hashicorpdemoapp/payments:latest
+          ports:
+            - containerPort: 1800
+          env:
+            - name: BIND_ADDRESS
+              value: ":1800"
