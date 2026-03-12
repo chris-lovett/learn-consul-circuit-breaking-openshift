@@ -29,6 +29,14 @@ metadata:
   namespace: circuitbreak
 spec:
   protocol: http
+  upstreamConfig:
+    defaults:
+      passiveHealthCheck:
+        interval: "0s"
+        maxFailures: 0
+        enforcingConsecutive5xx: 0
+        maxEjectionPercent: 0
+        baseEjectionTime: "10ms"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -117,7 +125,7 @@ spec:
             - name: PAYMENT_API_URI
               value: "http://payments:1800"
             - name: ERROR_RATE
-              value: "0"
+              value: "100"
           resources:
             limits:
               cpu: 100m
@@ -165,7 +173,7 @@ spec:
             - name: PAYMENT_API_URI
               value: "http://payments:1800"
             - name: ERROR_RATE
-              value: "0"
+              value: "100"
           resources:
             limits:
               cpu: 100m
