@@ -1,2 +1,6 @@
-namespace: circuitbreak
----
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: circuitbreak
+  labels:
+    consul.hashicorp.com/connect-inject: "true"
